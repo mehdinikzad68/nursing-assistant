@@ -1,0 +1,45 @@
+# ✅ فایل کانونی برای ویندوز — با این دستور بالا می‌آید:
+# docker compose -f docker-compose.dev.windows.yml up -d --build
+# (توجه: فرم جدید "docker compose" با فاصله — نه "docker-compose" با خط فاصله —
+#  چون فایل از کلید top-level نسخه‌دار version: استفاده نمی‌کند)
+#
+# چرا این فایل جداست؟ bind-mount مستقیم از ویندوز به لینوکس (.:/app)
+# روی فایل‌های زیاد کند است و گاهی رویداد تغییر فایل را از دست می‌دهد.
+# این فایل از named volume برای کل کد استفاده می‌کند و فقط پوشه‌های کاری
+# (app، components، data، public) را زنده نگه می‌دارد: سرعت + hot-reload مطمئن.
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: nurse-prototype:dev
+    container_name: nurse-prototype-dev
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - ./app:/app/app
+      - ./components:/app/components
+      - ./data:/app/data
+      - ./lib:/app/lib
+      - ./public:/app/public
+      - nurse_prototype_next:/app/.next
+      - nurse_swc_cache:/root/.cache/next-swc
+    environment:
+      NODE_ENV: development
+      NEXT_TELEMETRY_DISABLED: "1"
+      WATCHPACK_POLLING: "true"
+      CHOKIDAR_USEPOLLING: "true"
+    stdin_open: true
+    tty: true
+    restart: "no"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:3000/ >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  nurse_prototype_next:
+  nurse_swc_cache:

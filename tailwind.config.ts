@@ -1,0 +1,61 @@
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
+  darkMode: "class",
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ["Vazirmatn", "system-ui", "-apple-system", "Segoe UI", "Roboto", "sans-serif"],
+      },
+      colors: {
+        app: {
+          bg: "var(--app-bg)",
+          surface: "var(--app-surface)",
+          card: "var(--app-card)",
+          elevated: "var(--app-elevated)",
+          border: "var(--app-border)",
+          "border-light": "var(--app-border-light)",
+          "on-primary": "var(--app-on-primary)",
+          "primary-soft": "var(--app-primary-soft)",
+          info: "var(--app-info)",
+          "info-soft": "var(--app-info-soft)",
+          warning: "var(--app-warning)",
+          "warning-soft": "var(--app-warning-soft)",
+          success: "var(--app-success)",
+          "success-soft": "var(--app-success-soft)",
+          danger: "var(--app-danger)",
+          "danger-soft": "var(--app-danger-soft)",
+          error: "var(--app-error)",
+          "error-soft": "var(--app-error-soft)",
+        },
+        ink: {
+          DEFAULT: "var(--app-text)",
+          muted: "var(--app-text-muted)",
+          subtle: "var(--app-text-subtle)",
+        },
+        brand: {
+          DEFAULT: "var(--app-accent)",
+          strong: "var(--app-accent-strong)",
+        },
+        chip: {
+          "teal-bg": "var(--chip-teal-bg)",
+          "teal-fg": "var(--chip-teal-fg)",
+          "teal-border": "var(--chip-teal-border)",
+          "rose-bg": "var(--chip-rose-bg)",
+          "rose-fg": "var(--chip-rose-fg)",
+          "rose-border": "var(--chip-rose-border)",
+          "amber-bg": "var(--chip-amber-bg)",
+          "amber-fg": "var(--chip-amber-fg)",
+          "amber-border": "var(--chip-amber-border)",
+          "slate-bg": "var(--chip-slate-bg)",
+          "slate-fg": "var(--chip-slate-fg)",
+          "slate-border": "var(--chip-slate-border)",
+        },
+      },
+    },
+  },
+  plugins: [],
+};
+
+export default config;

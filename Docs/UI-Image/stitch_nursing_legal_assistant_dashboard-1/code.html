@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="fa"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>دستیار حقوقی و اداری پرستاران | راهنمایی هوشمند و اولیه</title>
+<!-- Tailwind CSS CDN with forms and container queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Vazirmatn for Persian typography & Plus Jakarta Sans for numerals/tech badges -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Vazirmatn', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['Plus Jakarta Sans', 'Vazirmatn', 'monospace'],
+          },
+          colors: {
+            app: {
+              bg: '#101418',
+              surface: '#151b22',
+              card: '#1a222c',
+              elevated: '#212b37',
+              border: '#2a3644',
+              borderLight: '#354354',
+            },
+            teal: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              200: '#99f6e4',
+              300: '#5eead4',
+              400: '#2dd4bf',
+              500: '#14b8a6',
+              600: '#0d9488',
+              700: '#0f766e',
+              800: '#115e59',
+              900: '#134e4a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Accessibility and calm UX: respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* Calming subtle scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #101418;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #25313f;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #354354;
+    }
+
+    /* Focused styling */
+    textarea:focus, input:focus {
+      outline: none;
+    }
+  </style>
+</head>
+<body class="bg-app-bg text-slate-100 font-sans antialiased min-h-screen selection:bg-teal-500/20 selection:text-teal-200 relative pb-16 flex flex-col justify-between">
+<!-- BEGIN: TopHeader -->
+<header class="sticky top-0 z-40 w-full backdrop-blur-md bg-app-surface/90 border-b border-app-border transition-colors">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+<!-- Right: Brand Logo & Title -->
+<div class="flex items-center gap-3.5">
+<div class="w-11 h-11 rounded-2xl bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-teal-400 shadow-sm">
+<!-- Reassuring Document/Shield/Scale Icon -->
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h1 class="text-base font-bold text-white tracking-tight">دستیار حقوقی و اداری پرستاران</h1>
+<span class="text-[11px] px-2.5 py-0.5 rounded-full font-medium bg-teal-950/80 text-teal-300 border border-teal-800/60">راهنمایی هوشمند و اولیه</span>
+</div>
+<p class="text-xs text-slate-400 font-normal mt-0.5">پشتیبانی مستند و اداری برای کادر شریف پرستاری کشور</p>
+</div>
+</div>
+<!-- Center: Calm Navigation Links -->
+<nav aria-label="ناوبری اصلی" class="hidden md:flex items-center p-1 rounded-xl bg-app-card/70 border border-app-border/80">
+<a class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-teal-500/15 text-teal-300 border border-teal-500/30 transition-colors" href="#home">
+        خانه
+      </a>
+<a class="px-4 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-app-elevated transition-colors" href="#followups">
+        پیگیری‌های من
+      </a>
+<a class="px-4 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-app-elevated transition-colors" href="#resources">
+        منابع مقررات
+      </a>
+<a class="px-4 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-app-elevated transition-colors" href="#help">
+        راهنما و پشتیبانی
+      </a>
+</nav>
+<!-- Left: Utility Controls & Privacy Trigger -->
+<div class="flex items-center gap-2.5">
+<!-- Privacy & Data Handling Modal Trigger -->
+<button class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-app-card hover:bg-app-elevated border border-app-border text-xs text-slate-300 hover:text-teal-300 transition-colors" onclick="toggleModal('privacy-modal')" type="button">
+<svg class="w-4 h-4 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>حریم خصوصی و داده‌ها</span>
+</button>
+<!-- Notifications -->
+<button aria-label="اعلان‌ها و یادآوری‌ها" class="relative w-9 h-9 rounded-xl bg-app-card hover:bg-app-elevated border border-app-border flex items-center justify-center text-slate-400 hover:text-white transition" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-teal-400"></span>
+</button>
+<!-- User Profile (Sarah Rahimi) -->
+<div class="flex items-center gap-2 p-1 pr-2 rounded-xl bg-app-card border border-app-border text-slate-200">
+<span class="text-xs font-semibold text-slate-300">سارا رحیمی</span>
+<div class="w-7 h-7 rounded-lg bg-teal-600/30 text-teal-300 border border-teal-500/30 flex items-center justify-center text-xs font-bold">
+          پرستار
+        </div>
+</div>
+</div>
+</div>
+</header>
+<!-- END: TopHeader -->
+<!-- BEGIN: Main Content -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-9">
+<!-- BEGIN: Hero Question Section (The core interaction area) -->
+<section aria-labelledby="question-hero-title" class="space-y-4">
+<div class="p-6 md:p-8 rounded-3xl bg-gradient-to-b from-app-card via-app-card/90 to-app-surface border border-teal-500/20 shadow-xl relative overflow-hidden">
+<!-- Gentle ambient glow behind prompt -->
+<div class="absolute -top-24 right-1/4 w-80 h-80 bg-teal-500/5 rounded-full blur-3xl pointer-events-none"></div>
+<div class="relative max-w-3xl">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/25 text-teal-300 text-xs font-medium mb-3">
+<span>شنبه، ۱۲ مهر ۱۴۰۵</span>
+<span class="text-teal-700">•</span>
+<span>راهنمای اداری، استخدامی و قوانین بالینی</span>
+</div>
+<h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight" id="question-hero-title">
+          سلام سارا، چه مسئله‌ای در محل کار برایت پیش آمده؟
+        </h2>
+<p class="text-sm md:text-base text-slate-400 mt-2 font-normal leading-relaxed">
+          مسئله‌ات را به زبان خودت بنویس. برای پاسخ دقیق‌تر ممکن است چند سؤال کوتاه بپرسیم تا مستندات و مقررات مربوطه را تطبیق دهیم.
+        </p>
+</div>
+<!-- Question Textarea with Voice & Document Upload Action -->
+<div class="mt-6 relative">
+<div class="rounded-2xl bg-app-surface border border-app-border focus-within:border-teal-500/60 focus-within:ring-2 focus-within:ring-teal-500/20 transition-all p-3 shadow-inner">
+<textarea class="w-full bg-transparent border-0 text-slate-100 placeholder-slate-500 text-sm md:text-base focus:ring-0 resize-none leading-relaxed p-1" id="nurse-prompt-input" placeholder="مثلاً: در بخش اورژانس برای ماه آینده سه شیفت شب متوالی اجباری بدون رضایت من ثبت شده است. روال قانونی اعتراض و آیین‌نامه مربوطه چیست؟" rows="3"></textarea>
+<!-- Input footer buttons -->
+<div class="flex flex-wrap items-center justify-between gap-3 pt-2.5 border-t border-app-border/70 mt-2">
+<div class="flex items-center gap-2">
+<!-- Upload Document CTA -->
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-app-elevated hover:bg-app-border text-slate-300 hover:text-white text-xs font-medium border border-app-border transition" onclick="toggleModal('upload-modal')" type="button">
+<svg class="w-4 h-4 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M12 4.5v15m7.5-7.5h-15" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>افزودن سند (فیش، ابلاغ، قرارداد)</span>
+</button>
+<!-- Voice Input Assistant Button -->
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-app-elevated hover:bg-app-border text-slate-300 hover:text-teal-300 text-xs font-medium border border-app-border transition" id="voice-record-btn" onclick="toggleVoiceDemo()" type="button">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15a3 3 0 003-3V6a3 3 0 00-6 0v6a3 3 0 003 3z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span id="voice-btn-label">طرح صوتی سوال</span>
+</button>
+</div>
+<div class="flex items-center gap-3">
+<button class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-semibold text-xs md:text-sm shadow-md shadow-teal-950 transition-colors" type="button">
+<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>شروع بررسی اولیه</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Privacy Shield Disclaimer: Reassuring & Clear -->
+<div class="flex items-center gap-2 mt-3 px-1 text-xs text-slate-400">
+<svg class="w-4 h-4 text-teal-400 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>حفظ حریم خصوصی بیمار و پرسنل: لطفاً نام بیمار، کد ملی، شماره پرسنلی و اطلاعات حساس درمانی را در متن وارد نکنید.</span>
+</div>
+</div>
+<!-- Quick Topics Pills (موضوعات پرتکرار) -->
+<div class="mt-6 pt-5 border-t border-app-border/70">
+<span class="text-xs font-medium text-slate-400 mb-3 block">موضوعات پرتکرار و نیازمند راهنمایی:</span>
+<div class="flex flex-wrap gap-2">
+<button class="text-xs px-3.5 py-1.5 rounded-xl bg-app-surface hover:bg-app-elevated border border-app-border text-slate-300 hover:text-white transition" onclick="fillPrompt('حقوق، اضافه‌کاری و شیفت‌های شب در بخش درمانی')">
+            حقوق و شیفت
+          </button>
+<button class="text-xs px-3.5 py-1.5 rounded-xl bg-app-surface hover:bg-app-elevated border border-app-border text-slate-300 hover:text-white transition" onclick="fillPrompt('بررسی وضعیت قرارداد کار معین، شرکتی یا تمدید طرح')">
+            قرارداد و استخدام
+          </button>
+<button class="text-xs px-3.5 py-1.5 rounded-xl bg-app-surface hover:bg-app-elevated border border-app-border text-slate-300 hover:text-white transition" onclick="fillPrompt('قوانین مرخصی استعلاجی ناشی از کار، بارداری و بیمه تامین اجتماعی')">
+            مرخصی و بیمه
+          </button>
+<button class="text-xs px-3.5 py-1.5 rounded-xl bg-app-surface hover:bg-app-elevated border border-app-border text-slate-300 hover:text-white transition" onclick="fillPrompt('نحوه پاسخ یا اعتراض به نامه یا تصمیم اداری بیمارستان')">
+            نامه یا تصمیم اداری
+          </button>
+<button class="text-xs px-3.5 py-1.5 rounded-xl bg-app-surface hover:bg-app-elevated border border-app-border text-slate-300 hover:text-white transition" onclick="fillPrompt('ضوابط جابه‌جایی ناخواسته بین بخش‌ها یا مراکز درمانی')">
+            انتقال و جابه‌جایی
+          </button>
+<button class="text-xs px-3.5 py-1.5 rounded-xl bg-app-surface hover:bg-app-elevated border border-app-border text-slate-300 hover:text-white transition" onclick="fillPrompt('شیوه‌نامه مواجهه با شکایات حرفه‌ای و رویه‌های انتظامی')">
+            موضوع حرفه‌ای یا انتظامی
+          </button>
+<button class="text-xs px-3.5 py-1.5 rounded-xl bg-teal-950/60 hover:bg-teal-900/60 border border-teal-700/50 text-teal-300 transition flex items-center gap-1.5" onclick="toggleModal('upload-modal')">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+            بررسی فیش حقوقی یا تعرفه
+          </button>
+<button class="text-xs px-3.5 py-1.5 rounded-xl bg-teal-950/60 hover:bg-teal-900/60 border border-teal-700/50 text-teal-300 transition flex items-center gap-1.5" onclick="toggleModal('upload-modal')">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+            بررسی حکم یا قرارداد
+          </button>
+</div>
+</div>
+</div>
+</section>
+<!-- END: Hero Question Section -->
+<!-- BEGIN: Trust, Positioning & Safe Upload Banner -->
+<section aria-label="راهنمای ایمنی و شفافیت" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Card 1: Transparent Boundaries -->
+<div class="p-5 rounded-2xl bg-app-card border border-app-border text-slate-300 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-2 text-teal-400 mb-2">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<h3 class="text-sm font-bold text-white">پاسخ قابل‌بررسی، تصمیم با شما</h3>
+</div>
+<p class="text-xs text-slate-400 leading-relaxed">
+          این سیستم یک ابزار هوشمند برای تحلیل اولیه مواد قانونی و مستندسازی است، نه وکیل یا مرجع قضایی. نتایج ارائه شده جنبه مشورتی داشته و رأی رسمی به شمار نمی‌روند.
+        </p>
+</div>
+<div class="mt-3 pt-3 border-t border-app-border/60 flex items-center justify-between text-[11px] text-slate-400">
+<span>بدون ادعای وکالت حقوقی</span>
+<button class="text-teal-400 hover:underline" onclick="toggleModal('privacy-modal')">مطالعه منشور شفافیت</button>
+</div>
+</div>
+<!-- Card 2: Human Expert Escalation -->
+<div class="p-5 rounded-2xl bg-app-card border border-app-border text-slate-300 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-2 text-teal-400 mb-2">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<h3 class="text-sm font-bold text-white">ارجاع به کارشناس اداری یا حقوقی</h3>
+</div>
+<p class="text-xs text-slate-400 leading-relaxed">
+          در مواردی که پرونده شما نیازمند بررسی تخصصی در تشکل‌های صنفی، نظام پرستاری یا دفاتر رسمی حقوقی باشد، پیش‌نویس مرتب‌شده را در اختیارتان می‌گذاریم تا به متخصص ارائه دهید.
+        </p>
+</div>
+<div class="mt-3 pt-3 border-t border-app-border/60 flex items-center justify-between text-[11px] text-slate-400">
+<span>آماده‌سازی مدارک استاندارد</span>
+<span class="text-slate-300 font-medium">قابلیت خروجی PDF</span>
+</div>
+</div>
+<!-- Card 3: Safe Document OCR Analyzer -->
+<div class="p-5 rounded-2xl bg-app-card border border-teal-500/30 text-slate-300 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2 text-teal-300">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<h3 class="text-sm font-bold text-white">بارگذاری و تحلیل امن سند</h3>
+</div>
+<span class="text-[10px] px-2 py-0.5 rounded bg-teal-500/20 text-teal-300 font-mono">حذف خودکار هویت</span>
+</div>
+<p class="text-xs text-slate-400 leading-relaxed">
+          متن فیش، حکم یا ابلاغیه را برای تطبیق با بخشنامه‌ها بررسی کنید. شما پیش از تحلیل هوش مصنوعی، متن استخراج‌شده را بازبینی و تأیید می‌کنید.
+        </p>
+</div>
+<div class="mt-3 pt-3 border-t border-app-border/60">
+<button class="w-full py-2 px-3 rounded-xl bg-teal-600/30 hover:bg-teal-600/50 text-teal-200 border border-teal-500/40 text-xs font-semibold text-center transition" onclick="toggleModal('upload-modal')">
+          شروع بارگذاری امن مدارک
+        </button>
+</div>
+</div>
+</section>
+<!-- END: Trust, Positioning & Safe Upload Banner -->
+<!-- BEGIN: Main Dashboard Grid (Follow-ups & AI Insights) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+<!-- Right Side (7 Columns in RTL): پیگیری‌های من (My Follow-ups) -->
+<section aria-labelledby="followups-title" class="lg:col-span-7 space-y-4">
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-2.5">
+<h3 class="text-lg font-bold text-white" id="followups-title">پیگیری‌های من</h3>
+<span class="px-2 py-0.5 rounded-full bg-app-card border border-app-border text-xs text-slate-300 font-semibold">
+            ۳ مورد در جریان
+          </span>
+</div>
+<!-- Status Filter -->
+<div class="flex items-center gap-1 bg-app-surface border border-app-border p-1 rounded-xl text-xs">
+<button class="px-3 py-1 rounded-lg bg-teal-600/20 text-teal-300 border border-teal-500/30 font-medium" type="button">همه</button>
+<button class="px-3 py-1 rounded-lg text-slate-400 hover:text-slate-200" type="button">نیازمند اقدام</button>
+<button class="px-3 py-1 rounded-lg text-slate-400 hover:text-slate-200" type="button">آرشیو</button>
+</div>
+</div>
+<!-- Follow-up Card 1: Urgent Deadline / Missing Info -->
+<article class="p-5 rounded-2xl bg-app-card border border-app-border hover:border-teal-500/40 transition duration-200 shadow-sm">
+<div class="flex items-start justify-between gap-3">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-mono text-slate-400">#NL-1405-218</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-rose-500/15 text-rose-300 border border-rose-500/30">
+<span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
+                مهلت پاسخ نزدیک: ۳ روز
+              </span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                نیازمند تکمیل اطلاعات
+              </span>
+</div>
+<h4 class="text-base font-bold text-white mt-2.5">بررسی دعوت‌نامه هیئت رسیدگی به تخلفات یا موضوع انتظامی</h4>
+<p class="text-xs text-slate-400 mt-1 leading-relaxed">
+              دریافت ابلاغیه برای جلسه بررسی عملکرد شیفت در بخش جراحی. پیشنهاد می‌شود پیش از حضور، لایحه توضیحی مکتوب و مستند به گزارش شیفت تهیه فرمایید.
+            </p>
+</div>
+</div>
+<!-- Next Action Recommendations -->
+<div class="mt-4 pt-3.5 border-t border-app-border/70 flex flex-wrap items-center justify-between gap-3">
+<div class="flex items-center gap-2 text-xs text-slate-400">
+<span class="font-medium text-slate-300">اقدام بعدی:</span>
+<span>تأیید پیش‌نویس متن پاسخ یا الصاق گزارش بالینی</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-xs px-3 py-1.5 rounded-xl bg-app-surface hover:bg-app-elevated border border-app-border text-slate-200 transition" onclick="toggleModal('upload-modal')">
+              الصاق برگه ابلاغیه
+            </button>
+<button class="text-xs px-3 py-1.5 rounded-xl bg-teal-600/30 hover:bg-teal-600/50 text-teal-200 border border-teal-500/40 transition font-medium">
+              مشاهده پیش‌نویس توضیحات
+            </button>
+</div>
+</div>
+</article>
+<!-- Follow-up Card 2: Shift Scheduling Follow-up -->
+<article class="p-5 rounded-2xl bg-app-card border border-app-border hover:border-teal-500/40 transition duration-200 shadow-sm">
+<div class="flex items-start justify-between gap-3">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-mono text-slate-400">#NL-1405-194</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-teal-500/15 text-teal-300 border border-teal-500/30">
+                آماده بازبینی شما
+              </span>
+</div>
+<h4 class="text-base font-bold text-white mt-2.5">بررسی ابلاغ جابه‌جایی شیفت در بخش اورژانس و شیفت‌های فشرده</h4>
+<p class="text-xs text-slate-400 mt-1 leading-relaxed">
+              تطبیق انجام شد با آیین‌نامه ارتقای بهره‌وری بالینی و دستورالعمل استراحت شیفت‌های شبانه کادر درمان.
+            </p>
+</div>
+</div>
+<div class="mt-4 pt-3.5 border-t border-app-border/70 flex flex-wrap items-center justify-between gap-3">
+<div class="flex items-center gap-2 text-xs text-slate-400">
+<span class="font-medium text-slate-300">مستند استخراج‌شده:</span>
+<span>بند ۳ ماده ۲ آیین‌نامه بهره‌وری بالینی</span>
+</div>
+<button class="text-xs px-3 py-1.5 rounded-xl bg-teal-600/30 hover:bg-teal-600/50 text-teal-200 border border-teal-500/40 transition font-medium">
+            دریافت متن استعلام اداری
+          </button>
+</div>
+</article>
+<!-- Follow-up Card 3: Salary & Tariffing Review -->
+<article class="p-5 rounded-2xl bg-app-card border border-app-border hover:border-teal-500/40 transition duration-200 shadow-sm">
+<div class="flex items-start justify-between gap-3">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-mono text-slate-400">#NL-1405-171</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-slate-700/60 text-slate-300 border border-slate-600/50">
+                در انتظار ارسال مدارک
+              </span>
+</div>
+<h4 class="text-base font-bold text-white mt-2.5">بررسی مغایرت اقلام تعرفه‌گذاری خدمات پرستاری در فیش شهریور</h4>
+<p class="text-xs text-slate-400 mt-1 leading-relaxed">
+              برای مقایسه با جدول ضرایب k و بسته‌های خدماتی مصوب شورای عالی بیمه سلامت، تصویر فیش بدون نام ارسال شود.
+            </p>
+</div>
+</div>
+<div class="mt-4 pt-3.5 border-t border-app-border/70 flex flex-wrap items-center justify-between gap-3">
+<div class="flex items-center gap-2 text-xs text-slate-400">
+<span>اقدام: بارگذاری بخش ردیف‌های مالی فیش حقوقی</span>
+</div>
+<button class="text-xs px-3 py-1.5 rounded-xl bg-app-surface hover:bg-app-elevated border border-app-border text-slate-200 transition" onclick="toggleModal('upload-modal')">
+            بارگذاری فیش
+          </button>
+</div>
+</article>
+<!-- Educational Case Patterns Card (نمونه‌های آموزشی مرتبط) -->
+<div class="p-5 rounded-2xl bg-app-surface border border-app-border/80">
+<div class="flex items-center justify-between mb-3">
+<h4 class="text-sm font-bold text-white flex items-center gap-2">
+<svg class="w-4 h-4 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>نمونه‌های آموزشی و رویه‌های متداول</span>
+</h4>
+<span class="text-[11px] text-slate-400">مرجع آگاهی‌بخشی</span>
+</div>
+<p class="text-xs text-slate-400 leading-relaxed mb-3">
+          بررسی تصمیمات اداری پیشین، بخشنامه‌های تفسیری وزارت بهداشت و رویه‌های هیئت‌های حل اختلاف:
+        </p>
+<div class="space-y-2">
+<div class="p-3 rounded-xl bg-app-card border border-app-border flex items-center justify-between text-xs">
+<span class="text-slate-300">رویه مرسوم اداری در خصوص سقف اضافه‌کار اجباری در شرایط کمبود نیرو</span>
+<span class="text-teal-400 hover:underline cursor-pointer">مطالعه خلاصه</span>
+</div>
+<div class="p-3 rounded-xl bg-app-card border border-app-border flex items-center justify-between text-xs">
+<span class="text-slate-300">چارچوب قانونی ثبت مستندات بالینی هنگام دستورات شفاهی یا تلفنی پزشک</span>
+<span class="text-teal-400 hover:underline cursor-pointer">مطالعه خلاصه</span>
+</div>
+</div>
+<p class="text-[11px] text-slate-500 mt-3">
+          * یادآوری اخلاقی و حقوقی: این نمونه‌ها صرفاً برای شناخت رویه‌هاست و نتیجه وضعیت پرونده شما را تعیین یا تضمین نمی‌کند.
+        </p>
+</div>
+</section>
+<!-- Left Side (5 Columns in RTL): Assistant Insights & Reminders -->
+<section aria-labelledby="insights-title" class="lg:col-span-5 space-y-5">
+<!-- Transparent 4-Layer Reasoning Card -->
+<div class="p-6 rounded-2xl bg-app-card border border-teal-500/25 shadow-lg relative overflow-hidden">
+<div class="flex items-center justify-between pb-3 border-b border-app-border">
+<div class="flex items-center gap-2">
+<span class="p-1.5 rounded-lg bg-teal-500/10 text-teal-400 border border-teal-500/20">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</span>
+<h3 class="text-sm font-bold text-white" id="insights-title">پاسخ اخیر دستیار (تحلیل لایه‌ای)</h3>
+</div>
+<span class="text-xs px-2.5 py-0.5 rounded-full bg-app-surface text-slate-300 border border-app-border font-medium">
+            پاسخ اولیه • نیازمند تکمیل
+          </span>
+</div>
+<!-- Question Prompt Preview -->
+<div class="mt-3.5 p-3 rounded-xl bg-app-surface/90 border border-app-border text-xs text-slate-300 leading-relaxed font-normal">
+<span class="text-slate-400 block text-[11px] mb-1 font-semibold">پرسش مطرح‌شده:</span>
+          «آیا سوپروایزر بدون رضایت می‌تواند سه شیفت شب متوالی برای من در بخش اورژانس ثبت کند؟»
+        </div>
+<!-- 4-Layer Structured Analysis -->
+<div class="mt-4 space-y-3.5 text-xs text-slate-300 leading-relaxed">
+<!-- Layer 1 -->
+<div class="flex gap-2.5 items-start">
+<div class="w-5 h-5 rounded-full bg-teal-950 text-teal-400 border border-teal-800 flex items-center justify-center shrink-0 font-mono text-[11px] font-bold mt-0.5">۱</div>
+<div>
+<strong class="text-white block font-semibold mb-0.5">وضعیت اولیه:</strong>
+<span>از اطلاعات فعلی نمی‌توان با قطعیت نظر داد؛ بررسی منوط به تطبیق با حکم استخدامی و فرم رضایت است.</span>
+</div>
+</div>
+<!-- Layer 2 -->
+<div class="flex gap-2.5 items-start">
+<div class="w-5 h-5 rounded-full bg-teal-950 text-teal-400 border border-teal-800 flex items-center justify-center shrink-0 font-mono text-[11px] font-bold mt-0.5">۲</div>
+<div>
+<strong class="text-white block font-semibold mb-0.5">برداشت از مسئله:</strong>
+<span>ثبت شیفت‌های متوالی شبانه در بخش پرفشار بدون توافق مکتوب با پرستار.</span>
+</div>
+</div>
+<!-- Layer 3 -->
+<div class="flex gap-2.5 items-start">
+<div class="w-5 h-5 rounded-full bg-teal-950 text-teal-400 border border-teal-800 flex items-center justify-center shrink-0 font-mono text-[11px] font-bold mt-0.5">۳</div>
+<div>
+<strong class="text-white block font-semibold mb-0.5">اطلاعات تکمیلی مورد نیاز:</strong>
+<span>نوع رابطه کاری (رسمی، پیمانی، تبصره یا شرکتی) و آیا دستور کتبی یا جدول زمان‌بندی ابلاغ شده است؟</span>
+</div>
+</div>
+<!-- Layer 4 -->
+<div class="flex gap-2.5 items-start">
+<div class="w-5 h-5 rounded-full bg-teal-950 text-teal-400 border border-teal-800 flex items-center justify-center shrink-0 font-mono text-[11px] font-bold mt-0.5">۴</div>
+<div>
+<strong class="text-white block font-semibold mb-0.5">مسیرهای پیشنهادی پیش‌رو:</strong>
+<div class="space-y-1 mt-1 text-slate-300">
+<p>• استعلام متن آیین‌نامه بهره‌وری بالینی (ماده استراحت بین شیفت‌ها)</p>
+<p>• دریافت فرم استاندارد نامه استعلام محترمانه از مترون بیمارستان</p>
+<p>• امکان ارجاع پرونده به کارشناس صنفی در صورت بروز تنبیه اداری</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Action / Form Preview -->
+<div class="mt-5 pt-3.5 border-t border-app-border flex items-center justify-between">
+<span class="text-[11px] text-slate-400">مستندات مرتبط پیوست شد</span>
+<button class="text-xs px-3 py-1.5 rounded-xl bg-app-elevated hover:bg-app-border text-teal-300 border border-app-border transition font-medium">
+            تکمیل اطلاعات پرونده
+          </button>
+</div>
+</div>
+<!-- Upcoming Deadlines & Administrative Reminders -->
+<div class="p-6 rounded-2xl bg-app-card border border-app-border shadow space-y-4">
+<div class="flex items-center justify-between pb-2 border-b border-app-border">
+<h3 class="text-sm font-bold text-white flex items-center gap-2">
+<svg class="w-4 h-4 text-teal-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>موعدها و یادآوری‌های من</span>
+</h3>
+<span class="text-[11px] text-slate-400">تقویم اداری مهر ۱۴۰۵</span>
+</div>
+<!-- Deadline Item 1 (Approaching / Calm Red highlight for deadline) -->
+<div class="flex items-center justify-between p-3 rounded-xl bg-app-surface border border-rose-900/30">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 flex flex-col items-center justify-center leading-none">
+<span class="text-xs font-bold font-mono">۱۵</span>
+<span class="text-[9px]">مهر</span>
+</div>
+<div>
+<p class="text-xs font-bold text-white">مهلت ارسال لایحه توضیحی اداری</p>
+<p class="text-[11px] text-slate-400 mt-0.5">مربوط به استعلام شیفت بیمارستان (۳ روز مانده)</p>
+</div>
+</div>
+<button class="text-xs px-2.5 py-1 rounded-lg bg-app-elevated hover:bg-app-border text-slate-200 border border-app-border">
+            اقدام
+          </button>
+</div>
+<!-- Deadline Item 2 (Standard reminder) -->
+<div class="flex items-center justify-between p-3 rounded-xl bg-app-surface border border-app-border">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-teal-500/10 border border-teal-500/20 text-teal-300 flex flex-col items-center justify-center leading-none">
+<span class="text-xs font-bold font-mono">۲۰</span>
+<span class="text-[9px]">مهر</span>
+</div>
+<div>
+<p class="text-xs font-bold text-white">ارسال اعتراض کارشناسی تعرفه‌گذاری</p>
+<p class="text-[11px] text-slate-400 mt-0.5">سامانه امور مالی دانشگاه علوم پزشکی</p>
+</div>
+</div>
+<button class="text-xs px-2.5 py-1 rounded-lg bg-app-elevated hover:bg-app-border text-slate-200 border border-app-border">
+            بررسی
+          </button>
+</div>
+</div>
+<!-- Legal & Regulatory News (Clean, Static, NO Marquee) -->
+<div class="p-5 rounded-2xl bg-app-card border border-app-border space-y-3">
+<div class="flex items-center justify-between">
+<h4 class="text-xs font-bold text-white flex items-center gap-2">
+<svg class="w-4 h-4 text-teal-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>تازه‌های مقررات و بخشنامه‌های پرستاری</span>
+</h4>
+<span class="text-[11px] text-teal-400 hover:underline cursor-pointer">همه بخشنامه‌ها</span>
+</div>
+<div class="space-y-2 text-xs">
+<div class="p-2.5 rounded-xl bg-app-surface border border-app-border hover:border-teal-500/30 transition">
+<span class="text-slate-200 font-medium block">دستورالعمل نظارت بر ساعات کار و استراحت کادر درمان در بخش‌های ویژه</span>
+<span class="text-[10px] text-slate-400 mt-1 block">ابلاغیه معاونت درمان وزارت بهداشت • مهر ۱۴۰۵</span>
+</div>
+<div class="p-2.5 rounded-xl bg-app-surface border border-app-border hover:border-teal-500/30 transition">
+<span class="text-slate-200 font-medium block">شیوه‌نامه پرداخت فوق‌العاده خاص و بسته‌های تعرفه‌گذاری جدید</span>
+<span class="text-[10px] text-slate-400 mt-1 block">مصوبه کارگروه مشترک نظام پرستاری و سازمان برنامه • شهریور ۱۴۰۵</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- END: Main Dashboard Grid -->
+</main>
+<!-- END: Main Content -->
+<!-- BEGIN: Simple Reassuring Footer -->
+<footer class="mt-12 border-t border-app-border bg-app-surface/90 text-slate-400 py-6 text-xs">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-lg bg-teal-500/20 text-teal-400 flex items-center justify-center font-bold text-xs">
+        د
+      </div>
+<span>دستیار حقوقی و اداری پرستاران • سامانه راهنمایی هوشمند و مستندسازی اولیه اداری</span>
+</div>
+<div class="flex items-center gap-4 text-slate-400">
+<button class="hover:text-teal-300" onclick="toggleModal('privacy-modal')">منشور حریم خصوصی</button>
+<span>•</span>
+<a class="hover:text-teal-300" href="#rules">قوانین و حدود مسئولیت</a>
+<span>•</span>
+<a class="hover:text-teal-300" href="#support">پشتیبانی و ثبت نظر</a>
+</div>
+</div>
+</footer>
+<!-- END: Simple Reassuring Footer -->
+<!-- BEGIN: Interactive Safe Document Upload Modal (با قابلیت بررسی OCR و پوشاندن اطلاعات حساس) -->
+<div class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden flex items-center justify-center p-4" id="upload-modal">
+<div class="bg-app-card border border-app-borderLight rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-5 text-right overflow-y-auto max-h-[90vh]">
+<div class="flex items-start justify-between border-b border-app-border pb-3">
+<div>
+<h3 class="text-base font-bold text-white flex items-center gap-2">
+<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>بارگذاری و تحلیل امن سند اداری</span>
+</h3>
+<p class="text-xs text-slate-400 mt-1">متن سند بدون ذخیره نام و مشخصات هویتی بررسی می‌شود.</p>
+</div>
+<button class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-app-elevated" onclick="toggleModal('upload-modal')">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+<!-- Privacy Shield Notice inside modal -->
+<div class="p-3 rounded-xl bg-teal-950/40 border border-teal-500/30 text-xs text-teal-200 leading-relaxed flex items-start gap-2.5">
+<svg class="w-4 h-4 text-teal-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>
+<strong>توصیه اکید امنیتی:</strong> پیش از بارگذاری، نام بیماران، شماره پرونده درمانی و کد ملی خود را با ابزار قلم تار یا خط‌زدگی پوشش دهید. سامانه نیز به صورت خودکار داده‌های عددی هویتی را فیلتر می‌کند.
+      </span>
+</div>
+<!-- Document Type Selector -->
+<div class="space-y-2">
+<label class="text-xs font-semibold text-slate-200 block">نوع مدرک اداری یا شغلی را مشخص کنید:</label>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+<label class="p-2.5 rounded-xl bg-app-surface border border-teal-500/50 text-teal-300 flex items-center gap-2 cursor-pointer">
+<input checked="" class="text-teal-500 focus:ring-0 bg-transparent border-slate-600" name="doctype" type="radio"/>
+<span>فیش حقوقی / تعرفه</span>
+</label>
+<label class="p-2.5 rounded-xl bg-app-surface border border-app-border text-slate-300 flex items-center gap-2 cursor-pointer hover:border-slate-500">
+<input class="text-teal-500 focus:ring-0 bg-transparent border-slate-600" name="doctype" type="radio"/>
+<span>حکم کارگزینی</span>
+</label>
+<label class="p-2.5 rounded-xl bg-app-surface border border-app-border text-slate-300 flex items-center gap-2 cursor-pointer hover:border-slate-500">
+<input class="text-teal-500 focus:ring-0 bg-transparent border-slate-600" name="doctype" type="radio"/>
+<span>ابلاغیه یا نامه اداری</span>
+</label>
+<label class="p-2.5 rounded-xl bg-app-surface border border-app-border text-slate-300 flex items-center gap-2 cursor-pointer hover:border-slate-500">
+<input class="text-teal-500 focus:ring-0 bg-transparent border-slate-600" name="doctype" type="radio"/>
+<span>قرارداد کار / تمدید طرح</span>
+</label>
+<label class="p-2.5 rounded-xl bg-app-surface border border-app-border text-slate-300 flex items-center gap-2 cursor-pointer hover:border-slate-500">
+<input class="text-teal-500 focus:ring-0 bg-transparent border-slate-600" name="doctype" type="radio"/>
+<span>جدول شیفت ماهانه</span>
+</label>
+<label class="p-2.5 rounded-xl bg-app-surface border border-app-border text-slate-300 flex items-center gap-2 cursor-pointer hover:border-slate-500">
+<input class="text-teal-500 focus:ring-0 bg-transparent border-slate-600" name="doctype" type="radio"/>
+<span>سایر مکاتبات</span>
+</label>
+</div>
+</div>
+<!-- Dropzone Area -->
+<div class="border-2 border-dashed border-app-borderLight hover:border-teal-500/50 rounded-2xl p-6 text-center bg-app-surface/60 transition">
+<svg class="w-10 h-10 text-teal-400 mx-auto mb-2" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24">
+<path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m6.75 12l-3-3m0 0l-3 3m3-3v6m-1.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<p class="text-xs font-semibold text-slate-200">فایل تصویر یا PDF را اینجا بکشید یا انتخاب کنید</p>
+<p class="text-[11px] text-slate-400 mt-1">فرمت‌های مجاز: PDF, JPG, PNG (حداکثر ۱۰ مگابایت)</p>
+<button class="mt-3 px-4 py-1.5 rounded-xl bg-app-elevated hover:bg-app-border text-teal-300 text-xs font-medium border border-app-border" type="button">
+        انتخاب فایل از دستگاه
+      </button>
+</div>
+<!-- OCR Preview with Human Confirmation Guardrail -->
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<label class="text-xs font-semibold text-slate-200">پیش‌نمایش متن استخراج‌شده (OCR جهت بازبینی شما):</label>
+<span class="text-[10px] text-teal-400">امکان ویرایش دستی قبل از ارسال به هوش مصنوعی</span>
+</div>
+<textarea class="w-full bg-app-surface border border-app-border rounded-xl text-slate-300 text-xs p-3 leading-relaxed focus:border-teal-500 focus:ring-0" placeholder="متن سند پس از انتخاب در اینجا نمایش داده می‌شود تا صحت آن را تایید کنید..." rows="3">[نمونه استخراج‌شده]: ردیف تعرفه‌گذاری خدمات پرستاری، ساعت کار موظف: ۱۴۴ ساعت، اضافه‌کار غیرموظف: ۴۰ ساعت، حق شیفت شب: محاسبه گردید.</textarea>
+</div>
+<!-- Confirmation Buttons -->
+<div class="flex items-center justify-end gap-3 pt-3 border-t border-app-border">
+<button class="px-4 py-2 rounded-xl bg-app-surface hover:bg-app-elevated text-slate-300 text-xs font-medium border border-app-border" onclick="toggleModal('upload-modal')" type="button">
+        انصراف
+      </button>
+<button class="px-5 py-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-xs font-bold shadow transition" onclick="alert('متن سند بررسی و به عنوان مبنای استعلام به پرونده افزوده شد.'); toggleModal('upload-modal')" type="button">
+        تأیید متن و شروع تحلیل مقررات
+      </button>
+</div>
+</div>
+</div>
+<!-- END: Interactive Safe Document Upload Modal -->
+<!-- BEGIN: Privacy & Transparency Modal -->
+<div class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden flex items-center justify-center p-4" id="privacy-modal">
+<div class="bg-app-card border border-app-borderLight rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4 text-right">
+<div class="flex items-center justify-between border-b border-app-border pb-3">
+<h3 class="text-base font-bold text-white flex items-center gap-2">
+<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>اصول حریم خصوصی، شفافیت و حدود اختیارات</span>
+</h3>
+<button class="text-slate-400 hover:text-white p-1 rounded-lg" onclick="toggleModal('privacy-modal')">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+<div class="space-y-3 text-xs text-slate-300 leading-relaxed max-h-[60vh] overflow-y-auto pr-1">
+<div class="p-3 rounded-xl bg-app-surface border border-app-border">
+<strong class="text-white block mb-1">۱. عدم ارائه خدمات وکالت مستقیم:</strong>
+<p class="text-slate-400">این پلتفرم صرفاً یک دستیار اداری و مشاوره‌ای مبتنی بر متن قوانین است و هیچ‌گونه ادعای وکالت در محاکم یا صدور احکام قضایی قطعی ندارد.</p>
+</div>
+<div class="p-3 rounded-xl bg-app-surface border border-app-border">
+<strong class="text-white block mb-1">۲. حفاظت از داده‌های بیماران و درمانگاه:</strong>
+<p class="text-slate-400">سیستم به صورت خودکار از ذخیره‌سازی نام اشخاص، مشخصات بالینی بیمار و ارقام هویتی جلوگیری می‌کند. مسئولیت عدم وارد نمودن اطلاعات محرمانه برعهده کاربر است.</p>
+</div>
+<div class="p-3 rounded-xl bg-app-surface border border-app-border">
+<strong class="text-white block mb-1">۳. تصمیم نهایی با شماست:</strong>
+<p class="text-slate-400">اطلاعات این سامانه به شما کمک می‌کند با آگاهی و مستند به بخشنامه‌ها صحبت کنید. در شرایط بحرانی، همواره با وکلای پایه یک یا مسئولین تشکل‌های صنفی پرستاری مشورت فرمایید.</p>
+</div>
+</div>
+<div class="pt-3 border-t border-app-border flex justify-end">
+<button class="px-5 py-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-xs font-bold transition" onclick="toggleModal('privacy-modal')">
+        متوجه شدم و می‌پذیرم
+      </button>
+</div>
+</div>
+</div>
+<!-- END: Privacy & Transparency Modal -->
+<!-- Simple Scripts for Interactivity & Modals -->
+<script>
+  function toggleModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+      modal.classList.toggle('hidden');
+    }
+  }
+
+  function fillPrompt(topicText) {
+    const textarea = document.getElementById('nurse-prompt-input');
+    if (textarea) {
+      textarea.value = 'در ارتباط با: ' + topicText + '، لطفاً قوانین و شیوه پیگیری اداری را بررسی کنید.';
+      textarea.focus();
+    }
+  }
+
+  let isRecording = false;
+  function toggleVoiceDemo() {
+    const label = document.getElementById('voice-btn-label');
+    const btn = document.getElementById('voice-record-btn');
+    isRecording = !isRecording;
+    if (isRecording) {
+      label.textContent = 'در حال شنیدن... (صحبت کنید)';
+      btn.classList.add('border-teal-400', 'text-teal-300', 'bg-teal-950/60');
+    } else {
+      label.textContent = 'طرح صوتی سوال';
+      btn.classList.remove('border-teal-400', 'text-teal-300', 'bg-teal-950/60');
+      const textarea = document.getElementById('nurse-prompt-input');
+      if (textarea && textarea.value === '') {
+        textarea.value = 'اعتراض به نحوه محاسبه اضافه‌کاری و کاهش ساعات موظفی قانون بهره‌وری در بخش CCU';
+      }
+    }
+  }
+</script>
+</body></html>

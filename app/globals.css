@@ -1,0 +1,166 @@
+@import url("https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== Theme tokens: LIGHT (default) ===== */
+:root {
+  --app-bg: #F7F8F6;
+  --app-surface: #FFFFFF;
+  --app-card: #FFFFFF;
+  --app-elevated: #F1F4F2;
+  --app-border: #D5DEE6;
+  --app-border-light: #B7D8D6;
+  --app-text: #18212B;
+  --app-text-muted: #516070;
+  --app-text-subtle: #66788A;
+  --app-accent: #0F6E6B;
+  --app-accent-strong: #0C5C59;
+  --app-on-primary: #FFFFFF;
+  --app-primary-soft: #E7F6F5;
+
+  /* Semantic colors */
+  --app-info: #1D4E89;
+  --app-info-soft: #E8F1FB;
+  --app-warning: #92400E;
+  --app-warning-soft: #FEF3C7;
+  --app-success: #166534;
+  --app-success-soft: #E9F8EF;
+  --app-danger: #9F1239;
+  --app-danger-soft: #FDE7EC;
+  --app-error: #B42318;
+  --app-error-soft: #FEE4E2;
+
+  /* Chip colors (mapped to semantic) */
+  --chip-teal-bg: #E7F6F5;
+  --chip-teal-fg: #0F6E6B;
+  --chip-teal-border: #8FC9C6;
+  --chip-rose-bg: #FDE7EC;
+  --chip-rose-fg: #9F1239;
+  --chip-rose-border: #FDA4AF;
+  --chip-amber-bg: #FEF3C7;
+  --chip-amber-fg: #92400E;
+  --chip-amber-border: #FCD34D;
+  --chip-slate-bg: #F1F4F2;
+  --chip-slate-fg: #516070;
+  --chip-slate-border: #D5DEE6;
+
+  color-scheme: light;
+}
+
+/* ===== Theme tokens: DARK ===== */
+.dark {
+  --app-bg: #101418;
+  --app-surface: #1A222C;
+  --app-card: #1A222C;
+  --app-elevated: #151B22;
+  --app-border: #354354;
+  --app-border-light: #1F6F6B;
+  --app-text: #E7EEF4;
+  --app-text-muted: #A8B6C4;
+  --app-text-subtle: #8EA0B0;
+  --app-accent: #5EEAD4;
+  --app-accent-strong: #99F6E4;
+  --app-on-primary: #042F2E;
+  --app-primary-soft: #12312F;
+
+  /* Semantic colors */
+  --app-info: #93C5FD;
+  --app-info-soft: #17273A;
+  --app-warning: #FCD34D;
+  --app-warning-soft: #3A2A10;
+  --app-success: #86EFAC;
+  --app-success-soft: #143024;
+  --app-danger: #FDA4AF;
+  --app-danger-soft: #3A1822;
+  --app-error: #FCA5A5;
+  --app-error-soft: #3B1717;
+
+  /* Chip colors (mapped to semantic) */
+  --chip-teal-bg: #12312F;
+  --chip-teal-fg: #5EEAD4;
+  --chip-teal-border: #1F6F6B;
+  --chip-rose-bg: #3A1822;
+  --chip-rose-fg: #FDA4AF;
+  --chip-rose-border: #9F1239;
+  --chip-amber-bg: #3A2A10;
+  --chip-amber-fg: #FCD34D;
+  --chip-amber-border: #92400E;
+  --chip-slate-bg: #151B22;
+  --chip-slate-fg: #A8B6C4;
+  --chip-slate-border: #354354;
+
+  color-scheme: dark;
+}
+
+/* ===== Focus ring (always visible) ===== */
+:focus-visible {
+  outline: 2px solid var(--app-accent);
+  outline-offset: 3px;
+}
+
+html {
+  direction: rtl;
+}
+
+body {
+  font-family: Vazirmatn, IRANSans, Tahoma, Arial, sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--app-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--app-border);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--app-text-subtle);
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+}
+
+/* Animations */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out;
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-up {
+  animation: slide-up 0.5s ease-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

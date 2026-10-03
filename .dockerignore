@@ -1,0 +1,10 @@
+node_modules/
+.next/
+out/
+dist/
+.DS_Store
+*.log
+build.log
+build.err.log
+dcbuild.log
+dcbuild.err.log

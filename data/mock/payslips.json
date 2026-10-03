@@ -1,0 +1,41 @@
+{
+  "sample": true,
+  "description": "فیش‌های حقوقی نمونه — هیچ داده واقعی وجود ندارد",
+  "payslips": [
+    {
+      "id": "sample-001",
+      "sample": true,
+      "nurseName": "نمونه — سارا محمدی",
+      "hospital": "نمونه — بیمارستان امام خمینی",
+      "department": "نمونه — داخلی",
+      "month": "نمونه — شهریور ۱۴۰۵",
+      "baseSalary": 85000000,
+      "overtime": 12000000,
+      "nightShift": 8000000,
+      "deductions": 3500000,
+      "netPay": 101500000,
+      "errors": [
+        {
+          "type": "کسر اضافه‌کاری",
+          "expected": 15000000,
+          "actual": 12000000,
+          "difference": 3000000
+        }
+      ]
+    },
+    {
+      "id": "sample-002",
+      "sample": true,
+      "nurseName": "نمونه — مریم احمدی",
+      "hospital": "نمونه — بیمارستان شریفی",
+      "department": "نمونه — اورژانس",
+      "month": "نمونه — شهریور ۱۴۰۵",
+      "baseSalary": 92000000,
+      "overtime": 18000000,
+      "nightShift": 12000000,
+      "deductions": 4200000,
+      "netPay": 117800000,
+      "errors": []
+    }
+  ]
+}

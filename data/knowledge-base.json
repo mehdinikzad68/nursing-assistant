@@ -1,0 +1,46 @@
+{
+  "sample": true,
+  "description": "ساختار پایگاه دانش حقوقی — نسخه نمونه",
+  "metadata": {
+    "version": "0.1.0",
+    "lastUpdated": "2026-10-02",
+    "source": "منابع عمومی",
+    "disclaimer": "این داده‌ها نمونه هستند و مبنای حقوقی ندارند."
+  },
+  "categories": [
+    {
+      "id": "labor-law",
+      "name": "قانون کار",
+      "status": "Active",
+      "items": [
+        {
+          "id": "sample-law-001",
+          "sample": true,
+          "title": "نمونه — اضافه‌کاری",
+          "content": "نمونه — هر ساعت کار اضافه از ساعات قانونی، مشمول ۴۰٪ دستمزد است.",
+          "status": "Active",
+          "effectiveDate": "1401/01/01",
+          "expirationDate": null,
+          "overriddenBy": null
+        }
+      ]
+    },
+    {
+      "id": "ministry-circulars",
+      "name": "بخشنامه‌های وزارت بهداشت",
+      "status": "Active",
+      "items": [
+        {
+          "id": "sample-circular-001",
+          "sample": true,
+          "title": "نمونه — شیفت شب",
+          "content": "نمونه — شیفت شب مشمول ۲۵٪ دستمزد است.",
+          "status": "Active",
+          "effectiveDate": "1402/01/01",
+          "expirationDate": null,
+          "overriddenBy": null
+        }
+      ]
+    }
+  ]
+}
