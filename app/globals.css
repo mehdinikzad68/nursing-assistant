@@ -45,6 +45,24 @@
   --chip-slate-fg: #516070;
   --chip-slate-border: #D5DEE6;
 
+  /* ===== Hami tokens (V2 dashboard) — stored as RGB triplets so Tailwind
+     opacity modifiers work: bg-hami-accent/15
+     Light = approved owner palette · dark = approved primary + design teal ===== */
+  --hami-canvas: 247 248 246;
+  --hami-card: 255 255 255;
+  --hami-sub: 241 244 242;
+  --hami-border: 213 222 230;
+  --hami-text: 24 33 43;
+  --hami-muted: 81 96 112;
+  --hami-accent: 15 110 107;
+  --hami-accent-strong: 12 92 89;
+  --hami-on-accent: 255 255 255;
+  --hami-teal: 15 110 107;
+  --hami-amber: 180 83 9;
+  --hami-blue: 30 64 175;
+  --hami-purple: 124 34 206;
+  --hami-rose: 190 18 60;
+
   color-scheme: light;
 }
 
@@ -89,6 +107,22 @@
   --chip-slate-bg: #151B22;
   --chip-slate-fg: #A8B6C4;
   --chip-slate-border: #354354;
+
+  /* ===== Hami tokens (V2 dashboard) — dark = low-glare night shift ===== */
+  --hami-canvas: 11 17 30;
+  --hami-card: 19 28 46;
+  --hami-sub: 8 13 23;
+  --hami-border: 255 255 255;
+  --hami-text: 231 238 244;
+  --hami-muted: 168 182 196;
+  --hami-accent: 45 212 191;
+  --hami-accent-strong: 94 234 212;
+  --hami-on-accent: 4 18 26;
+  --hami-teal: 45 212 191;
+  --hami-amber: 252 211 77;
+  --hami-blue: 147 197 253;
+  --hami-purple: 192 132 252;
+  --hami-rose: 251 113 133;
 
   color-scheme: dark;
 }
@@ -163,4 +197,118 @@ input:focus {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* =======================================================================
+   Hami — V2 dashboard primitives (covered by the reduced-motion rule above)
+   ===================================================================== */
+
+/* Glassmorphic bento surface (low glare in night shift) */
+.hami-glass {
+  background: rgb(var(--hami-card) / 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgb(var(--hami-border) / 0.1);
+  border-radius: 24px;
+  box-shadow:
+    0 18px 36px -12px rgb(0 0 0 / 0.28),
+    inset 0 1px 1px rgb(255 255 255 / 0.12);
+}
+
+/* Inner card / form rows */
+.hami-sub {
+  background: rgb(var(--hami-sub) / 0.75);
+  border: 1px solid rgb(var(--hami-border) / 0.1);
+}
+
+/* 3D clay buttons */
+.hami-clay {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  background: linear-gradient(145deg, rgb(var(--hami-accent)), rgb(var(--hami-accent-strong)));
+  color: rgb(var(--hami-on-accent));
+  border-radius: 16px;
+  box-shadow:
+    0 6px 16px -3px rgb(var(--hami-accent) / 0.45),
+    inset 0 2px 4px rgb(255 255 255 / 0.35),
+    inset 0 -3px 5px rgb(0 0 0 / 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.hami-clay:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 10px 20px -3px rgb(var(--hami-accent) / 0.55),
+    inset 0 2px 5px rgb(255 255 255 / 0.45),
+    inset 0 -3px 5px rgb(0 0 0 / 0.25);
+}
+.hami-clay:active {
+  transform: translateY(1px);
+}
+
+.hami-clay-amber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  background: linear-gradient(145deg, #f59e0b, #d97706);
+  color: #0b111e;
+  border-radius: 16px;
+  box-shadow:
+    0 6px 16px -3px rgb(245 158 11 / 0.35),
+    inset 0 2px 4px rgb(255 255 255 / 0.4),
+    inset 0 -3px 5px rgb(0 0 0 / 0.25);
+}
+
+.hami-clay-blue {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  background: linear-gradient(145deg, #3b82f6, #2563eb);
+  color: #ffffff;
+  border-radius: 16px;
+  box-shadow:
+    0 6px 16px -3px rgb(59 130 246 / 0.4),
+    inset 0 2px 4px rgb(255 255 255 / 0.35),
+    inset 0 -3px 5px rgb(0 0 0 / 0.25);
+}
+
+/* 3D clay icon tile */
+.hami-icon {
+  border-radius: 18px;
+  box-shadow:
+    0 8px 16px -4px rgb(0 0 0 / 0.32),
+    inset 0 2px 3px rgb(255 255 255 / 0.25),
+    inset 0 -2px 4px rgb(0 0 0 / 0.3);
+}
+
+/* Station stealth mode — shoulder-surfing protection (blur until hover/tap) */
+.hami-sensitive {
+  transition: filter 0.25s ease;
+}
+.stealth-active .hami-sensitive {
+  filter: blur(7px);
+  user-select: none;
+  cursor: pointer;
+}
+.stealth-active .hami-sensitive:hover,
+.stealth-active .hami-sensitive:focus-within,
+.stealth-active .hami-sensitive:active {
+  filter: blur(0);
+}
+
+@keyframes hami-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.hami-fade-in {
+  animation: hami-fade-in 0.25s ease-out;
 }

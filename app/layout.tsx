@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import DashboardHeader from "@/components/dashboard/DashboardHeader";
-import PageShell from "@/components/PageShell";
+import AppShell from "@/components/AppShell";
 import UploadModal from "@/components/dashboard/UploadModal";
 import PrivacyModal from "@/components/dashboard/PrivacyModal";
 
@@ -24,8 +23,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body className="min-h-screen bg-app-bg text-ink antialiased">
-        <DashboardHeader />
-        <PageShell>{children}</PageShell>
+        <AppShell>{children}</AppShell>
         <UploadModal />
         <PrivacyModal />
       </body>
