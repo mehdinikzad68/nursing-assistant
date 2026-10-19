@@ -42,7 +42,8 @@ export default function ChatCard() {
     calmMotion,
     toggleCalmMotion,
     openModal,
-    toast
+    toast,
+    user
   } = useHami();
 
   const [listening, setListening] = useState(false);
@@ -112,8 +113,17 @@ export default function ChatCard() {
               <Sparkles className="h-3.5 w-3.5" />
               <span>همراه تخصصی شما با هماهنگی بخش حقوقی نظام پرستاری</span>
             </span>
-            <h2 className="text-lg font-black leading-relaxed sm:text-xl">{profile.greeting}</h2>
-            <p className="mt-1 text-xs leading-relaxed opacity-80 sm:text-sm">{profile.subtext}</p>
+            {/* درود شخصی: اگر کاربر واردشده باشد، نام او را استفاده می‌کنیم */}
+            {user ? (
+              <h2 className="text-lg font-black leading-relaxed sm:text-xl">
+                سلام {user.name.trim().split(" ")[0]} جان؛ {profile.subtext}
+              </h2>
+            ) : (
+              <>
+                <h2 className="text-lg font-black leading-relaxed sm:text-xl">{profile.greeting}</h2>
+                <p className="mt-1 text-xs leading-relaxed opacity-80 sm:text-sm">{profile.subtext}</p>
+              </>
+            )}
           </div>
 
           <Orbit3D calmMotion={calmMotion} onToggleMotion={toggleCalmMotion} avatarEmoji={profile.avatarEmoji} />

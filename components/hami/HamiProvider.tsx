@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { HamiContext } from "./context";
-import type { HamiContextValue } from "./context";
+import type { AuthUser, HamiContextValue } from "./context";
+import { USER_STORAGE_KEY } from "./context";
 import {
   ANSWER_LEVELS,
   CHAT_ERROR_TEXT,
@@ -10,6 +11,7 @@ import {
   INITIAL_REMINDERS,
   RATE_LIMIT_TEXT,
   ROLE_PROFILES,
+  UPSTREAM_BUSY_TEXT,
   VOICE_FALLBACK_TRANSCRIPT,
   WELCOME_TEXT
 } from "./data";
@@ -17,6 +19,8 @@ import { cancelSpeech, isTtsSupported, speak } from "./speech";
 import type { ChatMessage, HamiModal, MemoryItem, OcrSummary, ReminderItem, RoleKey, WorkspaceMode } from "./types";
 
 const DRAFT_STORAGE_KEY = "hami:chat-draft";
+/** پرسشی که کاربر در لندینگ مطرح کرده و باید در داشبورد خودکار ارسال شود */
+const PENDING_QUESTION_KEY = "hami:pending-question";
 const TOAST_MS = 4200;
 
 const WELCOME_MESSAGE: ChatMessage = {
@@ -48,12 +52,37 @@ function buildDraftLetter(roleTitle: string): string {
   ].join("\n");
 }
 
+/**
+ * نگاشت نقش انتخابی در فرم ثبت‌نام (فارسی) به نقش‌های محتوایی داشبورد.
+ * Trace: T10 نقطه‌کور ۵ (تکثر استخدام) · شخصی‌سازی داشبورد
+ *
+ * اگر نقشی در فهرست نبود، null برمی‌گردد تا نقش پیش‌فرض حفظ شود.
+ */
+export function authRoleToRoleKey(authRole: string): RoleKey | null {
+  const normalized = authRole.trim();
+  const map: Record<string, RoleKey> = {
+    پرستار: "nurse",
+    پرستاری: "nurse",
+    ماما: "or_midwife",
+    مامایی: "or_midwife",
+    اتاق_عمل: "or_midwife",
+    بهورز: "behvarz",
+    بهورزی: "behvarz",
+    "کادر اداری درمان": "admin_staff",
+    "کادر اداری": "admin_staff",
+    پزشک: "nurse",
+    سایر: "nurse"
+  };
+  return map[normalized] ?? null;
+}
+
 export default function HamiProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [hydrated, setHydrated] = useState(false);
   const [role, setRoleState] = useState<RoleKey>("nurse");
   const [workspaceMode, setWorkspaceMode] = useState<WorkspaceMode>("all");
   const [calmMotion, setCalmMotion] = useState(true);
   const [stealth, setStealth] = useState(false);
-  const [showDevBar, setShowDevBar] = useState(false);
   const [modal, setModal] = useState<HamiModal>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([WELCOME_MESSAGE]);
   const [chatInput, setChatInput] = useState("");
@@ -96,6 +125,33 @@ export default function HamiProvider({ children }: { children: React.ReactNode }
     }
   }, [chatInput]);
 
+  /* ---------- خواندن کاربر واردشده از حافظهٔ مرورگر ---------- */
+  useEffect(() => {
+    try {
+      const stored = window.localStorage.getItem(USER_STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored) as AuthUser;
+        setUser(parsed);
+        // شخصی‌سازی: نقش انتخابی کاربر در ثبت‌نام، نقش داشبورد را تعیین می‌کند
+        const mapped = authRoleToRoleKey(parsed.role);
+        if (mapped) setRoleState(mapped);
+      }
+    } catch {
+      /* حافظه خراب یا در دسترس نیست — بی‌اثر */
+    }
+    setHydrated(true);
+  }, []);
+
+  const signOut = useCallback(() => {
+    setUser(null);
+    try {
+      window.localStorage.removeItem(USER_STORAGE_KEY);
+    } catch {
+      /* ignore */
+    }
+    toast("از حساب خارج شدید.");
+  }, [toast]);
+
   /* ---------- نقش ---------- */
   const setRole = useCallback(
     (next: RoleKey) => {
@@ -127,8 +183,6 @@ export default function HamiProvider({ children }: { children: React.ReactNode }
       return next;
     });
   }, [toast]);
-
-  const toggleDevBar = useCallback(() => setShowDevBar((prev) => !prev), []);
 
   const openModal = useCallback((next: HamiModal) => setModal(next), []);
   const closeModal = useCallback(() => setModal(null), []);
@@ -162,15 +216,22 @@ export default function HamiProvider({ children }: { children: React.ReactNode }
           const data = (await response.json()) as { content?: string; error?: string };
 
           if (!response.ok || typeof data.content !== "string") {
-            // ۴۲۹ یعنی محدودیت نرخ مدل رایگان — پیام اختصاصی و بدون سرزنش
-            if (response.status === 429) {
-              const rateMessage: ChatMessage = {
+            // ۴۲۹ = محدودیت نرخ · ۵۰۳ = شلوغی سرویس بالادستی — هر دو با پیام اختصاصی
+            const friendlyText =
+              response.status === 429
+                ? RATE_LIMIT_TEXT
+                : response.status === 503 || response.status === 502
+                  ? UPSTREAM_BUSY_TEXT
+                  : null;
+
+            if (friendlyText) {
+              const serviceMessage: ChatMessage = {
                 id: `err-${Date.now()}`,
                 sender: "error",
                 timestamp: nowLabel(),
-                text: RATE_LIMIT_TEXT
+                text: friendlyText
               };
-              setMessages((prev) => [...prev, rateMessage]);
+              setMessages((prev) => [...prev, serviceMessage]);
               setChatInput(trimmed);
               setPending(false);
               return;
@@ -205,6 +266,28 @@ export default function HamiProvider({ children }: { children: React.ReactNode }
     },
     [pending, workspaceMode]
   );
+
+  /* ---------- ارسال خودکار پرسشی که از لندینگ آمده ---------- */
+  const pendingQuestionRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    try {
+      const stored = window.localStorage.getItem(PENDING_QUESTION_KEY);
+      if (stored) {
+        window.localStorage.removeItem(PENDING_QUESTION_KEY);
+        pendingQuestionRef.current = stored;
+      }
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  useEffect(() => {
+    const question = pendingQuestionRef.current;
+    if (!question || !hydrated) return;
+    pendingQuestionRef.current = null;
+    submitQuestion(question);
+  }, [hydrated, submitQuestion]);
 
   const generateDraft = useCallback(() => {
     const draftMessage: ChatMessage = {
@@ -284,6 +367,9 @@ export default function HamiProvider({ children }: { children: React.ReactNode }
 
   const value = useMemo<HamiContextValue>(
     () => ({
+      user,
+      hydrated,
+      signOut,
       role,
       profile: ROLE_PROFILES[role],
       setRole,
@@ -293,8 +379,6 @@ export default function HamiProvider({ children }: { children: React.ReactNode }
       toggleCalmMotion,
       stealth,
       toggleStealth,
-      showDevBar,
-      toggleDevBar,
       modal,
       openModal,
       closeModal,
@@ -332,13 +416,14 @@ export default function HamiProvider({ children }: { children: React.ReactNode }
       reminders,
       role,
       setRole,
-      showDevBar,
+      signOut,
+      user,
+      hydrated,
       speakingId,
       stealth,
       submitQuestion,
       toast,
       toggleCalmMotion,
-      toggleDevBar,
       toggleSpeech,
       toggleStealth,
       toastMessage,

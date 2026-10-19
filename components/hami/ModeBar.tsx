@@ -1,7 +1,6 @@
 "use client";
 
-import { GraduationCap, Layers, PauseCircle, PlayCircle, Scale, Terminal } from "lucide-react";
-import { DEMO_CASES } from "./data";
+import { GraduationCap, Layers, PauseCircle, PlayCircle, Scale } from "lucide-react";
 import { useHami } from "./context";
 import { CARD, SUB } from "./theme";
 import type { WorkspaceMode } from "./types";
@@ -13,21 +12,11 @@ const MODES: { key: WorkspaceMode; label: string; hint: string; icon: typeof Lay
 ];
 
 /**
- * نوار حالت کاری + کنترل انیمیشن + پنل تست ریپازیتوری.
+ * نوار حالت کاری + کنترل انیمیشن.
  * Trace: UI-2 (EMOTIONAL WORKSPACE FILTER BAR) · تصمیم D2 (جداسازی فضای حقوقی از تجاری)
  */
 export default function ModeBar() {
-  const {
-    workspaceMode,
-    setWorkspaceMode,
-    calmMotion,
-    toggleCalmMotion,
-    showDevBar,
-    toggleDevBar,
-    submitQuestion,
-    openModal,
-    toast
-  } = useHami();
+  const { workspaceMode, setWorkspaceMode, calmMotion, toggleCalmMotion, toast } = useHami();
 
   return (
     <>
@@ -84,45 +73,8 @@ export default function ModeBar() {
               </>
             )}
           </button>
-
-          <button
-            type="button"
-            onClick={toggleDevBar}
-            aria-expanded={showDevBar}
-            className="flex items-center gap-1.5 rounded-xl border border-hami-purple/30 bg-hami-purple/15 px-3 py-1.5 text-xs font-bold text-hami-purple transition-colors hover:bg-hami-purple/25"
-          >
-            <Terminal className="h-3.5 w-3.5" />
-            <span>پنل تست مسیرهای اپ</span>
-          </button>
         </div>
       </div>
-
-      {showDevBar && (
-        <div className="hami-fade-in mb-5 rounded-[22px] border-2 border-hami-purple/40 bg-hami-purple/10 p-4">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs font-extrabold text-hami-purple">
-                🗂️ سناریوهای نمونهٔ متصل به مسیرهای واقعی اپ:
-              </span>
-              {DEMO_CASES.map((demoCase) => (
-                <button
-                  key={demoCase.id}
-                  type="button"
-                  onClick={() => {
-                    if (demoCase.openModalOnLoad === "scanner") openModal("scanner");
-                    if (demoCase.openModalOnLoad === "consult") openModal("consult");
-                    submitQuestion(demoCase.prompt);
-                  }}
-                  className="rounded-xl border border-hami-teal/30 bg-hami-sub px-3 py-1.5 text-xs font-bold text-hami-teal transition-colors hover:bg-hami-teal/15"
-                >
-                  {demoCase.route} ({demoCase.id})
-                </button>
-              ))}
-            </div>
-            <span className="font-mono text-xs text-hami-muted">data/mock/payslip-sara.json • DC-01..DC-05</span>
-          </div>
-        </div>
-      )}
     </>
   );
 }

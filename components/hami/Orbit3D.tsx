@@ -59,30 +59,7 @@ export default function Orbit3D({ calmMotion, onToggleMotion, avatarEmoji }: Orb
         </span>
       </span>
 
-      {/* کره‌های مداری: قوانین، بازآموزی، سلامت جهانی */}
-      <span
-        className={`absolute inset-0 transition-transform duration-1000 ${calmMotion ? "" : "animate-spin"}`}
-        style={{ animationDuration: "22s" }}
-      >
-        <span
-          title="مدار قوانین و بخشنامه‌ها"
-          className="hami-icon absolute -top-1 left-1/2 flex h-7 w-7 -translate-x-1/2 items-center justify-center rounded-full border border-white/60 bg-gradient-to-br from-hami-amber to-hami-amber/70 text-xs"
-        >
-          ⚖️
-        </span>
-        <span
-          title="مدار بازآموزی و ارتقای شغلی"
-          className="hami-icon absolute bottom-2 right-1 flex h-7 w-7 items-center justify-center rounded-full border border-white/60 bg-gradient-to-br from-hami-teal to-hami-teal/70 text-xs"
-        >
-          🎓
-        </span>
-        <span
-          title="مدار سلامت و گردشگری پزشکی"
-          className="hami-icon absolute bottom-2 left-1 flex h-7 w-7 items-center justify-center rounded-full border border-white/60 bg-gradient-to-br from-hami-purple to-hami-purple/70 text-xs"
-        >
-          🌍
-        </span>
-      </span>
+      {/* کره‌های مداری حذف شدند — فقط هستهٔ اصلی و حلقه‌ها باقی ماندند */}
     </button>
   );
 }

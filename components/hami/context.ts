@@ -12,11 +12,27 @@ import type {
   WorkspaceMode
 } from "./types";
 
+/** کلید ذخیرهٔ کاربر در حافظهٔ مرورگر — باید با صفحهٔ لندینگ یکی باشد */
+export const USER_STORAGE_KEY = "hami:user";
+
+/** اطلاعات کاربر واردشده — فقط در مرورگر کاربر نگهداری می‌شود */
+export interface AuthUser {
+  name: string;
+  mobile: string;
+  role: string;
+}
+
 /**
  * وضعیت مشترک داشبورد حامی‌درمان.
  * Trace: UI-2 · T06 (یکپارچگی تجربهٔ کاربری در یک صفحه)
  */
 export interface HamiContextValue {
+  /* کاربر واردشده از طریق صفحهٔ ورود/ثبت‌نام */
+  user: AuthUser | null;
+  /** آیا حافظهٔ مرورگر خوانده شد؟ تا پیش از این، نباید به لندینگ هدایت شود */
+  hydrated: boolean;
+  signOut: () => void;
+
   /* نقش و حالت کاری */
   role: RoleKey;
   profile: RoleProfile;
@@ -31,8 +47,6 @@ export interface HamiContextValue {
   /** حالت محرمانهٔ استیشن — محو کردن عناوین و مبالغ حساس */
   stealth: boolean;
   toggleStealth: () => void;
-  showDevBar: boolean;
-  toggleDevBar: () => void;
 
   /* پنجره‌ها */
   modal: HamiModal;

@@ -2,11 +2,19 @@
 
 > 🔶 **این نسخه نمایشی است** — پاسخ‌ها نمونه‌اند و مبنای حقوقی ندارند.
 
-دستیار حقوقی و اداری پرستاران — نسخه اول نمایشی با داده‌های عمومی.
+دستیار حقوقی و اداری پرستاران ایران — وب‌اپلیکیشن فارسی راست‌به‌چپ با داشبورد «حامی‌درمان».
 
 ## ویژگی‌ها
 
-- ✅ داشبورد «حامی‌درمان» (نسخهٔ دوم رابط) با ۷ جعبهٔ بنتو روی مسیر `/`
+### صفحهٔ فرود و ورود/ثبت‌نام (`/`)
+- ✅ طراحی سینمایی hero-opus با تصویر کیهانی، ذرات شناور و انیمیشن‌های کامل (Ken Burns، درخشش دکمه، ضربان لوگو، خط پالس)
+- ✅ حالت روشن و تیره — همگام با تم بقیهٔ اپ (کلید `theme` در `localStorage`)
+- ✅ ثبت‌نام سه‌مرحله‌ای: موبایل ← کد تأیید ← نام و نقش شغلی
+- ✅ صفحهٔ خوش‌آمد ۳ ثانیه‌ای با ضربان و نوار پیشرفت
+- ✅ حفظ پرسش کاربر در مسیر ورود و ارسال خودکار آن در گفتگوی داشبورد
+
+### داشبورد «حامی‌درمان» (`/dashboard`)
+- ✅ ۷ جعبهٔ بنتو: چت راهنما، اتاق مشاوره، فیش‌خوان، پروندهٔ شخصی، بازآموزی، منابع علمی، رادار حقوقی
 - ✅ گفتگوی واقعی با مدل + قالب پاسخ ۴ بخشی و سه سطح شفافیت
 - ✅ انتخاب جایگاه شغلی (۷ نقش: پرستار، اتاق عمل/مامایی، پاراکلینیک، بهورز، اداری، خدمات، HR)
 - ✅ حالت محرمانهٔ استیشن (محو شدن مبالغ حساس)
@@ -14,10 +22,16 @@
 - ✅ فیش‌خوان با تطبیق چشمی کاربر
 - ✅ پیش‌نویس نامهٔ اداری قابل ویرایش
 - ✅ پخش صوتی پاسخ و ورودی صوتی (در مرورگرهای پشتیبان)
-- ✅ صفحات تخصصی: `/chat`، `/payroll`، `/leave`، `/transfer`، `/plan`، `/expert`، `/guide`، `/archive`، `/case`، `/profile`
-- ✅ حالت تاریک (شیفت شب)
+- ✅ نمایش نام و نقش کاربر و امکان خروج
+
+### صفحات تخصصی
+`/chat` · `/payroll` · `/leave` · `/transfer` · `/plan` · `/expert` · `/guide` · `/archive` · `/case` · `/profile`
+
+### عمومی
+- ✅ تم روشن/تیره در همهٔ مسیرها
 - ✅ راست‌به‌چپ با فونت Vazirmatn
-- ✅ بدون ثبت‌نام اجباری
+- ✅ آرشیو گفتگو روی `localStorage`
+- ✅ بدون ثبت‌نام اجباری (نسخهٔ نمایشی)
 
 ## شروع
 
@@ -34,25 +48,48 @@ npm run dev
 docker compose -f docker-compose.dev.windows.yml up -d --build
 ```
 
-> نکته: در کانتینر فقط پوشه‌های `app`, `components`, `data`, `lib`, `public` زنده mount می‌شوند؛ پس از افزودن یا تغییر وابستگی در `package.json` باید ایمیج یک‌بار `--build` شود.
+> **نکتهٔ مهم داکر:** در کانتینر فقط پوشه‌های `app`, `components`, `data`, `lib`, `public` زنده mount می‌شوند و پوشهٔ `.next` یک volume نام‌دارِ جداست. بنابراین:
+> - تغییر کد → hot-reload خودکار، بدون rebuild
+> - تغییر `package.json` → یک‌بار `--build` لازم است
+> - `npm run dev` و `npm run build` را هم‌زمان روی یک پوشه اجرا نکنید (کش `.next` خراب می‌شود)
 
 ## ساختار پروژه
 
 ```
-app/                    # صفحات و مسیرهای API نکست
-  page.tsx              # داشبورد حامی‌درمان (اسمبل components/hami)
-  chat/page.tsx         # گفتگوی تخصصی با آرشیو
-  payroll|leave|transfer|plan|expert|guide/
-  api/chat/route.ts     # تنها قابلیت واقعی: اتصال به مدل زبانی
+app/                       # صفحات و مسیرهای API نکست
+  page.tsx                 # صفحهٔ فرود (اسمبل components/landing)
+  dashboard/page.tsx       # داشبورد شخصی (گارد ورود + داشبورد V2)
+  chat/ payroll/ leave/ transfer/ plan/ expert/ guide/
+  archive/ case/ profile/ home/
+  api/chat/route.ts        # تنها قابلیت واقعی: اتصال به UniRouter
 components/
-  hami/                 # داشبورد نسخهٔ دوم (Header، ModeBar، ۷ کارت، Modals، data، theme، speech)
-  dashboard/            # اجزای داشبورد نسخهٔ اول (فعلاً سوار نیست — در انتظار تصمیم مالک)
-  ui/                   # کامپوننت‌های پایهٔ طراحی
-data/                   # داده‌های نمونه (mock/، knowledge-base.json)
-lib/                    # chat-store، logger
-Docs/                   # مستندات پروژه (STATUS، ARCH، DESIGN-SYSTEM، CHANGELOG، نقشهٔ راه)
-ai-agents/              # تعریف نقش‌های ایجنت‌ها
+  landing/                 # صفحهٔ فرود hero-opus (LandingPage، SignupModal، WelcomeScreen، Illustration، Logo، data)
+  hami/                    # داشبورد V2 (Header، ModeBar، ۷ کارت، Modals، Toast، data، theme، speech، context)
+  auth/                    # پروتوتایپ ورود (HeroSection، AuthFlow، DemoChat) — فعلاً سوار نیست
+  dashboard/               # اجزای داشبورد نسخهٔ اول — فعلاً سوار نیست
+  ui/                      # کامپوننت‌های پایهٔ طراحی (Button، Card، Input، ChatBubble)
+  AppShell.tsx             # پوستهٔ اپ + ناوبری
+  PageShell.tsx            # ظرف تمام‌عرض برای / و /dashboard
+  ThemeToggle.tsx          # کلید تم روشن/تیره
+data/                      # داده‌های نمونه (mock/، knowledge-base.json)
+lib/                       # chat-store، logger
+public/images/             # دارایی‌های بصری (scene.jpg، grain.svg، medical-cosmos.webp)
+design/                    # مواد مرجع طراحی (پروتوتایپ‌ها، تصاویر، آرشیو شخصی‌سازی v1)
+Docs/                      # مستندات پروژه (STATUS، ARCH، DESIGN-SYSTEM، CHANGELOG، QA-REPORT، نقشهٔ راه)
+ai-agents/                 # تعریف نقش‌های ایجنت‌ها
+scripts/                   # اسکریپت‌های کمکی (check-encoding)
 ```
+
+## اسکریپت‌ها
+
+| فرمان | کار |
+|---|---|
+| `npm run dev` | اجرای محیط توسعه |
+| `npm run build` | بیلد تولید |
+| `npm run typecheck` | بررسی تایپ (`tsc --noEmit`) |
+| `npm test` | اجرای تست‌ها (۳۱ تست) |
+| `npm run lint` | ESLint روی `app` + `components` + `lib` |
+| `npm run check:encoding` | بررسی کدگذاری UTF-8 فایل‌ها |
 
 ## قوانین پروژه
 
@@ -60,6 +97,8 @@ ai-agents/              # تعریف نقش‌های ایجنت‌ها
 - هیچ ادعای وکالت نمی‌شود
 - سه سطح قطعیت الزامی است
 - بدون دارک‌پترن
+- بدون آمار ساختگی (هر عدد باید منبع واقعی داشته باشد)
+- رنگ خام در کامپوننت‌ها ممنوع است — فقط توکن‌های `app/globals.css` و `tailwind.config.ts`
 
 ## تیم توسعه
 
@@ -71,6 +110,12 @@ ai-agents/              # تعریف نقش‌های ایجنت‌ها
 | MOCK | داده‌های نمونه |
 | QA | کنترل کیفیت |
 | REVIEW | بازبین حقوقی |
+
+## وضعیت فعلی
+
+- مرحله: **پروتوتایپ نمایشی** — آمادهٔ نمایش، آمادهٔ انتشار عمومی نیست
+- جزئیات کامل: [`Docs/STATUS.md`](Docs/STATUS.md)
+- تاریخچهٔ تغییرات: [`Docs/CHANGELOG.md`](Docs/CHANGELOG.md)
 
 ## مجوز
 

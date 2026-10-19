@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useHami } from "./context";
 import CaseFileCard from "./CaseFileCard";
 import ChatCard from "./ChatCard";
@@ -18,9 +20,10 @@ import Toast from "./Toast";
  * داشبورد «حامی‌درمان» — رابط اصلی نسخهٔ دوم.
  * Trace: UI-2 code_artifact-react.tsx → app/page.tsx · T06 · DESIGN-SYSTEM.md §9
  *
- * چیدمان: شبکهٔ بنتوی ۴ ستونه با ۷ جعبه:
+ * چیدمان: شبکهٔ بنتوی ۴ ستونه با جعبه‌های:
  *   ۱) چت راهنما (۲×۲) · ۲) اتاق مشاوره · ۳) فیش‌خوان · ۴) پروندهٔ شخصی
  *   ۵) بازآموزی · ۶) منابع علمی (۲×۱) · ۷) رادار حقوقی (۲×۱)
+ *   ۸) پیشنهادهای شخصی (۲×۱) — متناسب با رشته و شغل کاربر
  *
  * دو حالت کاری وجود دارد: «نمای کامل» و «فقط حقوقی» یا «فقط رشد/آموزش»
  * تا فضای حقوقی از فضای تجاری جدا بماند (تصمیم D2).
@@ -46,13 +49,39 @@ function DashboardGrid() {
 export default function HamiDashboard() {
   return (
     <HamiProvider>
-      <PageShell />
+      <DashboardGate />
     </HamiProvider>
   );
 }
 
+/**
+ * گارد احراز هویت — داخل Provider است تا با تغییر وضعیت کاربر (مثلاً خروج)
+ * واکنش نشان دهد. تا پیش از hydrated شدن، هدایت انجام نمی‌شود تا کاربرِ
+ * واردشده به‌اشتباه به لندینگ فرستاده نشود.
+ */
+function DashboardGate() {
+  const { user, hydrated } = useHami();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (hydrated && !user) {
+      router.replace("/");
+    }
+  }, [hydrated, user, router]);
+
+  if (!hydrated || !user) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-hami-canvas">
+        <p className="text-sm text-hami-muted">در حال بررسی ورود…</p>
+      </div>
+    );
+  }
+
+  return <DashboardShell />;
+}
+
 /** بدنهٔ داشبورد — داخل Provider تا بتواند به حالت محرمانه دسترسی داشته باشد */
-function PageShell() {
+function DashboardShell() {
   const { stealth } = useHami();
 
   return (

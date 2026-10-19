@@ -3,13 +3,13 @@
 import { usePathname } from "next/navigation";
 
 /**
- * Dashboard ("/") is full-bleed and manages its own width.
- * Every other route gets a readable centered container.
+ * Dashboard ("/" لندینگ و "/dashboard" داشبورد) تمام‌صفحه است و خودش عرض را مدیریت می‌کند.
+ * سایر مسیرها ظرف خوانایی مرکزی می‌گیرند.
  */
 export default function PageShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
-  if (pathname === "/") {
+  if (pathname === "/" || pathname === "/dashboard") {
     return <div className="w-full">{children}</div>;
   }
 

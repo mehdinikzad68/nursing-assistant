@@ -312,3 +312,213 @@ input:focus {
 .hami-fade-in {
   animation: hami-fade-in 0.25s ease-out;
 }
+
+/* =======================================================================
+   Hami Landing (hero-opus) — انیمیشن‌های صفحهٔ فرود و ورود/ثبت‌نام
+   منبع: Nursing Assistant-2/UI/hami-darman-hero-opus (hami.css)
+   ===================================================================== */
+
+/* بافت دانه‌ای روی کل صفحه */
+.hami-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0.09;
+  mix-blend-mode: overlay;
+  background-image: url("/images/grain.svg");
+}
+
+/* دکمهٔ اصلی با درخشش چرخه‌ای */
+.hami-cta {
+  box-shadow:
+    0 0 0 1px rgb(165 243 252 / 0.5) inset,
+    0 10px 40px -8px rgb(34 211 238 / 0.65),
+    0 0 70px -10px rgb(94 234 212 / 0.55);
+  animation: hami-glow 3.2s ease-in-out infinite;
+}
+@keyframes hami-glow {
+  50% {
+    box-shadow:
+      0 0 0 1px rgb(165 243 252 / 0.7) inset,
+      0 12px 52px -6px rgb(34 211 238 / 0.85),
+      0 0 90px -8px rgb(94 234 212 / 0.7);
+  }
+}
+
+/* جرقهٔ تزئینی ✦ */
+.hami-twinkle {
+  display: inline-block;
+  animation: hami-twinkle 2.6s ease-in-out infinite;
+}
+@keyframes hami-twinkle {
+  50% {
+    transform: scale(1.3) rotate(45deg);
+    filter: drop-shadow(0 0 6px #f5c76b);
+  }
+}
+
+/* حرکت آرام تصویر پس‌زمینه (Ken Burns) */
+.hami-kenburns {
+  animation: hami-kb 26s ease-in-out infinite alternate;
+  transform-origin: 30% 40%;
+}
+@keyframes hami-kb {
+  to {
+    transform: scale(1.06) translate(-1%, -1%);
+  }
+}
+
+/* پرتو نور روی تصویر */
+.hami-beam {
+  animation: hami-beam 5s ease-in-out infinite;
+}
+@keyframes hami-beam {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+/* ذرات شناور تصویر */
+.hami-spark {
+  opacity: 0;
+  animation: hami-spark 5s ease-in-out infinite;
+}
+@keyframes hami-spark {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.6);
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-36px) scale(1.1);
+  }
+}
+
+/* ورود نرم */
+.hami-fade {
+  animation: hami-fade 0.3s ease-out both;
+}
+@keyframes hami-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/* باز شدن پنجره (پاپ) */
+.hami-pop {
+  animation: hami-pop 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+@keyframes hami-pop {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+  }
+}
+
+/* جابه‌جایی مراحل فرم */
+.hami-step {
+  animation: hami-step 0.35s ease-out both;
+}
+@keyframes hami-step {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+}
+
+/* حلقهٔ درخشان صفحهٔ خوش‌آمد */
+.hami-ring {
+  animation: hami-ring 2s ease-out infinite;
+}
+@keyframes hami-ring {
+  from {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* ضربان لوگو */
+.hami-heartbeat {
+  animation: hami-hb 1.2s ease-in-out infinite;
+  filter: drop-shadow(0 0 18px rgb(34 211 238 / 0.6));
+}
+@keyframes hami-hb {
+  15% {
+    transform: scale(1.12);
+  }
+  30% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.08);
+  }
+  60% {
+    transform: scale(1);
+  }
+}
+
+/* خط ضربان صفحهٔ خوش‌آمد */
+.hami-pulse-line {
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+  animation: hami-draw 1.6s ease-in-out infinite;
+}
+@keyframes hami-draw {
+  to {
+    stroke-dashoffset: -400;
+  }
+}
+
+/* نوار پیشرفت صفحهٔ خوش‌آمد */
+.hami-progress {
+  width: 0;
+  animation: hami-progress 3s linear forwards;
+}
+@keyframes hami-progress {
+  to {
+    width: 100%;
+  }
+}
+
+/* نقاط در حال تایپ */
+.hami-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: #5eead4;
+  animation: hami-dot 1s ease-in-out infinite;
+}
+@keyframes hami-dot {
+  50% {
+    transform: translateY(-4px);
+    opacity: 0.4;
+  }
+}
+
+/* احترام به ترجیح کاهش حرکت */
+@media (prefers-reduced-motion: reduce) {
+  .hami-kenburns,
+  .hami-spark,
+  .hami-beam,
+  .hami-cta,
+  .hami-twinkle {
+    animation: none;
+  }
+  .hami-spark {
+    opacity: 0.6;
+  }
+}

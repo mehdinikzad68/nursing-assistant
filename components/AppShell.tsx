@@ -8,12 +8,13 @@ import PageShell from "@/components/PageShell";
  * پوستهٔ اپ.
  * Trace: T06 (یکپارچگی رابط) · UI-2
  *
- * روی مسیر «/» (داشبورد حامی‌درمان) هدر ناوبری قدیمی نمایش داده نمی‌شود،
- * چون خود داشبورد هدر زمینه‌ای با ناوبری کامل دارد تا دو نوار روی هم انباشته نشوند.
+ * روی مسیر «/» (لندینگ) و «/dashboard» (داشبورد حامی‌درمان) هدر ناوبری قدیمی
+ * نمایش داده نمی‌شود، چون خود داشبورد هدر زمینه‌ای با ناوبری کامل دارد
+ * تا دو نوار روی هم انباشته نشوند.
  */
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isDashboard = pathname === "/";
+  const isDashboard = pathname === "/" || pathname === "/dashboard";
 
   return (
     <>
